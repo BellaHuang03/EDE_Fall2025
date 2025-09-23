@@ -79,11 +79,24 @@ print(filenames)
 ```{r here in action}
 
 # 1. Read the 'NTL-LTER_Lake_ChemistryPhysics_Raw.csv' into a dataframe
+NTL_data <- read.csv(
+  file = here('Data','Raw','NTL-LTER_Lake_ChemistryPhysics_Raw.csv'),
+  stringsAsFactors = T
+)
 
-
-# 2.
+# 2.Read in all CSV files starting with "EPAair_O3." into a single dataframe
+#import library
 library(tidyverse);library(here)
 
+
+fileholder <- here("Data","Raw")
+files <- dir(fileholder, pattern = "EPAair_O3.*.", full.names = TRUE)
+files
+
+EPAdata <- files %>%
+  map(read_csv) %>% 
+  reduce(rbind)
+  bind_rows()
 ```
 
 ---
@@ -133,7 +146,7 @@ date_obj_today
 
 #Ex_3 - on your own...
 str_juneteenth <- "19 June 1865"
-#date_juneteenth <- ()
+date_juneteenth <- dmy(str_juneteenth)
 #date_juneteenth
 ```
 ### The century issue
@@ -172,11 +185,11 @@ fixed_date_obj_past
 str_past <- "55-feb-3"
 
 #Alternative 1
-date_obj_past <- fast_strptime(str_past,"%y-%b-%d",cutoff_2000=24L)
+date_obj_past <- fast_strptime(str_past,"%y-%b-%d",cutoff_2000=25L)
 date_obj_past
 
 #Alternative 2
-date_obj_past2 <- parse_date_time2(str_past,"ymd",cutoff_2000=24L)
+date_obj_past2 <- parse_date_time2(str_past,"ymd",cutoff_2000=25L)
 date_obj_past2
 
 #Functions ymd(), mdy(), ydm() do not take argument cutoff_2000
@@ -225,6 +238,7 @@ class(sites$dow)
 unique(sites$dow)
 
 #Summary - is it meaningful?
+#meaningless w/ only numbers
 summary(sites$dow)
 
 ```
@@ -337,10 +351,25 @@ usgs_flow_data$datetime = mdy(usgs_flow_data$datetime)
 usgs_flow_data$month <- month(usgs_flow_data$datetime)
 
 #Convert to a factor, with labels and levels
+usgs_flow_data$month <- factor(usgs_flow_data$month)
 
+## What class is the dow column now?
+class(usgs_flow_data$month)
 
+#List the unique values in the column
+unique(usgs_flow_data$month)
+
+#Show the levels associated with our factor column
+levels(usgs_flow_data$month)
+usgs_flow_data$month <- factor(usgs_flow_data$month, 
+                               levels=seq(1:12),
+                               labels = month.abb
+                               )
+levels(usgs_flow_data$month)
 #Plot
-
+ggplot(usgs_flow_data, aes(x=month))+
+  geom_bar()+
+  scale_x_discrete(drop=FALSE)
 
 ```
 

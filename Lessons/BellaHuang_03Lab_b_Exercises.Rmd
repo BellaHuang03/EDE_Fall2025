@@ -61,7 +61,7 @@ pm25$Date <- mdy(pm25$Date)
 
 ```{r Visualize the data}
 #Number of samples using each different source 
-
+ggplot(pm25, aes(x=Source)) + geom_bar()
 
 #Distribution of daily mean concentration values
 
