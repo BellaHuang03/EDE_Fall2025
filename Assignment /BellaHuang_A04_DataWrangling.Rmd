@@ -36,10 +36,10 @@ library(here)
 #1b 
 getwd()
 #1c 
-o3_2018  <- read.csv("../Data/Raw/EPAair_O3_NC2018_raw.csv",  stringsAsFactors = TRUE)
-o3_2019  <- read.csv("../Data/Raw/EPAair_O3_NC2019_raw.csv",  stringsAsFactors = TRUE)
-pm25_2018 <- read.csv("../Data/Raw/EPAair_PM25_NC2018_raw.csv", stringsAsFactors = TRUE)
-pm25_2019 <- read.csv("../Data/Raw/EPAair_PM25_NC2019_raw.csv", stringsAsFactors = TRUE)
+o3_2018  <- read.csv(here("Data", "Raw", "EPAair_O3_NC2018_raw.csv"), stringsAsFactors = TRUE)
+o3_2019  <- read.csv(here("Data", "Raw", "EPAair_O3_NC2019_raw.csv"), stringsAsFactors = TRUE)
+pm25_2018 <- read.csv(here("Data", "Raw", "EPAair_PM25_NC2018_raw.csv"), stringsAsFactors = TRUE)
+pm25_2019 <- read.csv(here("Data", "Raw", "EPAair_PM25_NC2019_raw.csv"), stringsAsFactors = TRUE)
 
 #2 
 dim(o3_2018)
